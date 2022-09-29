@@ -1,3 +1,4 @@
+import Player from "../characters/Player";
 import config from "../config";
 
 declare type WasdKeys = {
@@ -7,7 +8,7 @@ declare type WasdKeys = {
   right?: Phaser.Input.Keyboard.Key;
 };
 export default class PlayingScene extends Phaser.Scene {
-  private player: Phaser.GameObjects.Image | null = null;
+  private player: Phaser.GameObjects.Sprite | null = null;
 
   private background: Phaser.GameObjects.TileSprite;
   private cursorKeys: CursorKeys;
@@ -18,7 +19,17 @@ export default class PlayingScene extends Phaser.Scene {
   }
   preload() {
     this.load.setBaseURL("http://127.0.0.1:8887");
-    this.load.image("player", "./src/assets/sprites/mushroom.png");
+    this.load.image("playerR1", "./src/assets/sprites/kirbyR1.png");
+    this.load.image("playerR2", "./src/assets/sprites/kirbyR2.png");
+    this.load.image("playerR3", "./src/assets/sprites/kirbyR3.png");
+    this.load.image("playerR4", "./src/assets/sprites/kirbyR4.png");
+    this.load.image("playerR5", "./src/assets/sprites/kirbyR5.png");
+    this.load.image("playerR6", "./src/assets/sprites/kirbyR6.png");
+    this.load.image("playerR7", "./src/assets/sprites/kirbyR7.png");
+    this.load.image("playerR8", "./src/assets/sprites/kirbyR8.png");
+    this.load.image("playerR9", "./src/assets/sprites/kirbyR9.png");
+    this.load.image("playerR10", "./src/assets/sprites/kirbyR10.png");
+
     this.load.image("background", "./src/assets/background/clouds.png");
   }
   create() {
@@ -32,7 +43,29 @@ export default class PlayingScene extends Phaser.Scene {
     this.background.setOrigin(0, 0);
     this.background.alpha = 0.5;
 
-    this.player = this.add.image(400, 300, "player");
+    this.anims.create({
+      key: "right",
+      frames: [
+        { key: "playerR1" },
+        { key: "playerR2" },
+        { key: "playerR3" },
+        { key: "playerR4" },
+        { key: "playerR5" },
+        { key: "playerR6" },
+        { key: "playerR7" },
+        { key: "playerR8" },
+        { key: "playerR9" },
+        { key: "playerR10" },
+      ],
+      frameRate: 10,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: "stop",
+      frames: [{ key: "playerR1" }],
+    });
+    this.player = this.add.sprite(400, 300, "playerR1");
+
     this.cameras.main.startFollow(this.player);
 
     this.cursorKeys = this.input.keyboard.createCursorKeys();
@@ -48,12 +81,20 @@ export default class PlayingScene extends Phaser.Scene {
       this.player.x -= 3;
     } else if (this.cursorKeys.right.isDown || this.wasdKeys.right.isDown) {
       this.player.x += 3;
+      this.player.play("right", true);
     }
 
     if (this.cursorKeys.up.isDown || this.wasdKeys.up.isDown) {
       this.player.y -= 3;
     } else if (this.cursorKeys.down.isDown || this.wasdKeys.down.isDown) {
       this.player.y += 3;
+    }
+
+    if (
+      Phaser.Input.Keyboard.JustUp(this.cursorKeys.right) ||
+      Phaser.Input.Keyboard.JustUp(this.wasdKeys.right)
+    ) {
+      this.player.play("stop", true);
     }
   }
 

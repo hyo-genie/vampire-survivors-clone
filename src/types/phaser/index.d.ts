@@ -92,7 +92,7 @@ declare type AnimationFrameConfig = {
     /**
      * [description]
      */
-    frame: string | number;
+    frame?: string | number;
     /**
      * [description]
      */
