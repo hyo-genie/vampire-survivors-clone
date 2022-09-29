@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack --mode development",
-    "start": "webpack-dev-server --mode development --config webpack.config.js --host http://127.0.0.1:8081"
+    "start": "webpack-dev-server --mode development --config webpack.config.js --host 127.0.0.1 --port 8081"
   },
   "devDependencies": {
     "html-webpack-plugin": "^5.5.0",
