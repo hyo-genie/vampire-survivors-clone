@@ -30,6 +30,16 @@ export default class PlayingScene extends Phaser.Scene {
     this.load.image("playerR9", "./src/assets/sprites/kirbyR9.png");
     this.load.image("playerR10", "./src/assets/sprites/kirbyR10.png");
 
+    this.load.image("playerL1", "./src/assets/sprites/kirbyL1.png");
+    this.load.image("playerL2", "./src/assets/sprites/kirbyL2.png");
+    this.load.image("playerL3", "./src/assets/sprites/kirbyL3.png");
+    this.load.image("playerL4", "./src/assets/sprites/kirbyL4.png");
+    this.load.image("playerL5", "./src/assets/sprites/kirbyL5.png");
+    this.load.image("playerL6", "./src/assets/sprites/kirbyL6.png");
+    this.load.image("playerL7", "./src/assets/sprites/kirbyL7.png");
+    this.load.image("playerL8", "./src/assets/sprites/kirbyL8.png");
+    this.load.image("playerL9", "./src/assets/sprites/kirbyL9.png");
+    this.load.image("playerL10", "./src/assets/sprites/kirbyL10.png");
     this.load.image("background", "./src/assets/background/clouds.png");
   }
   create() {
@@ -57,7 +67,24 @@ export default class PlayingScene extends Phaser.Scene {
         { key: "playerR9" },
         { key: "playerR10" },
       ],
-      frameRate: 10,
+      frameRate: 8,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: "left",
+      frames: [
+        { key: "playerL1" },
+        { key: "playerL2" },
+        { key: "playerL3" },
+        { key: "playerL4" },
+        { key: "playerL5" },
+        { key: "playerL6" },
+        { key: "playerL7" },
+        { key: "playerL8" },
+        { key: "playerL9" },
+        { key: "playerL10" },
+      ],
+      frameRate: 8,
       repeat: -1,
     });
     this.anims.create({
@@ -65,7 +92,6 @@ export default class PlayingScene extends Phaser.Scene {
       frames: [{ key: "playerR1" }],
     });
     this.player = this.add.sprite(400, 300, "playerR1");
-
     this.cameras.main.startFollow(this.player);
 
     this.cursorKeys = this.input.keyboard.createCursorKeys();
@@ -78,6 +104,7 @@ export default class PlayingScene extends Phaser.Scene {
   }
   movePlayerManager() {
     if (this.cursorKeys.left.isDown || this.wasdKeys.left.isDown) {
+      this.player.play("left", true);
       this.player.x -= 3;
     } else if (this.cursorKeys.right.isDown || this.wasdKeys.right.isDown) {
       this.player.x += 3;
@@ -92,7 +119,9 @@ export default class PlayingScene extends Phaser.Scene {
 
     if (
       Phaser.Input.Keyboard.JustUp(this.cursorKeys.right) ||
-      Phaser.Input.Keyboard.JustUp(this.wasdKeys.right)
+      Phaser.Input.Keyboard.JustUp(this.wasdKeys.right) ||
+      Phaser.Input.Keyboard.JustUp(this.cursorKeys.left) ||
+      Phaser.Input.Keyboard.JustUp(this.wasdKeys.left)
     ) {
       this.player.play("stop", true);
     }
