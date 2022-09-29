@@ -7,6 +7,9 @@ const config = {
   backgroundColor: "#CDE8F6",
   parent: "thegame",
   scene: [PlayingScene],
+  physics: {
+    default: "arcade",
+  },
 };
 
 export default config;

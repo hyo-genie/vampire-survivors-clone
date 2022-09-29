@@ -1,5 +1,6 @@
 import Player from "../characters/Player";
 import config from "../config";
+import Beam from "../effects/Beam";
 
 declare type WasdKeys = {
   up?: Phaser.Input.Keyboard.Key;
@@ -17,6 +18,7 @@ export default class PlayingScene extends Phaser.Scene {
   constructor() {
     super("PlayGame");
   }
+
   preload() {
     this.load.setBaseURL("http://127.0.0.1:8887");
     this.load.image("playerR1", "./src/assets/sprites/kirbyR1.png");
@@ -40,6 +42,9 @@ export default class PlayingScene extends Phaser.Scene {
     this.load.image("playerL8", "./src/assets/sprites/kirbyL8.png");
     this.load.image("playerL9", "./src/assets/sprites/kirbyL9.png");
     this.load.image("playerL10", "./src/assets/sprites/kirbyL10.png");
+
+    this.load.image("beam", "./src/assets/bullets/bullet01.png");
+
     this.load.image("background", "./src/assets/background/clouds.png");
   }
   create() {
@@ -94,6 +99,14 @@ export default class PlayingScene extends Phaser.Scene {
     this.player = this.add.sprite(400, 300, "playerR1");
     this.cameras.main.startFollow(this.player);
 
+    this.time.addEvent({
+      delay: 1000,
+      callback: () => {
+        this.shoot();
+      },
+      loop: true,
+    });
+
     this.cursorKeys = this.input.keyboard.createCursorKeys();
     this.wasdKeys = this.input.keyboard.addKeys({
       up: Phaser.Input.Keyboard.KeyCodes.W,
@@ -102,6 +115,10 @@ export default class PlayingScene extends Phaser.Scene {
       right: Phaser.Input.Keyboard.KeyCodes.D,
     });
   }
+  shoot() {
+    new Beam(this, this.player);
+  }
+
   movePlayerManager() {
     if (this.cursorKeys.left.isDown || this.wasdKeys.left.isDown) {
       this.player.play("left", true);
