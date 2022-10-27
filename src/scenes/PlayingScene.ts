@@ -1,6 +1,7 @@
 import config from "../config";
 import Beam from "../effects/Beam";
 import Enemy from "../sprites/Enemy";
+import Player from "../sprites/Player";
 
 declare type WasdKeys = {
   up?: Phaser.Input.Keyboard.Key;
@@ -9,13 +10,13 @@ declare type WasdKeys = {
   right?: Phaser.Input.Keyboard.Key;
 };
 export default class PlayingScene extends Phaser.Scene {
-  player: Phaser.GameObjects.Sprite | null = null;
-  beams: Phaser.GameObjects.Group | null = null;
-  enemies: Phaser.Physics.Arcade.Group | null = null;
+  player: Player;
+  beams: Phaser.GameObjects.Group;
+  enemies: Phaser.Physics.Arcade.Group;
 
   private background: Phaser.GameObjects.TileSprite;
-  private cursorKeys: CursorKeys;
-  private wasdKeys: WasdKeys;
+  cursorKeys: CursorKeys;
+  wasdKeys: WasdKeys;
 
   constructor() {
     super("PlayGame");
@@ -89,79 +90,7 @@ export default class PlayingScene extends Phaser.Scene {
     this.background.alpha = 0.5;
 
     // Player
-    this.anims.create({
-      key: "right",
-      frames: [
-        { key: "playerR1" },
-        { key: "playerR2" },
-        { key: "playerR3" },
-        { key: "playerR4" },
-        { key: "playerR5" },
-        { key: "playerR6" },
-        { key: "playerR7" },
-        { key: "playerR8" },
-        { key: "playerR9" },
-        { key: "playerR10" },
-      ],
-      frameRate: 8,
-      repeat: -1,
-    });
-    this.anims.create({
-      key: "left",
-      frames: [
-        { key: "playerL1" },
-        { key: "playerL2" },
-        { key: "playerL3" },
-        { key: "playerL4" },
-        { key: "playerL5" },
-        { key: "playerL6" },
-        { key: "playerL7" },
-        { key: "playerL8" },
-        { key: "playerL9" },
-        { key: "playerL10" },
-      ],
-      frameRate: 8,
-      repeat: -1,
-    });
-    this.anims.create({
-      key: "up",
-      frames: [
-        { key: "playerU1" },
-        { key: "playerU2" },
-        { key: "playerU3" },
-        { key: "playerU4" },
-        { key: "playerU5" },
-        { key: "playerU6" },
-        { key: "playerU7" },
-        { key: "playerU8" },
-        { key: "playerU9" },
-        { key: "playerU10" },
-      ],
-      frameRate: 8,
-      repeat: -1,
-    });
-    this.anims.create({
-      key: "down",
-      frames: [
-        { key: "playerD1" },
-        { key: "playerD2" },
-        { key: "playerD3" },
-        { key: "playerD4" },
-        { key: "playerD5" },
-        { key: "playerD6" },
-        { key: "playerD7" },
-        { key: "playerD8" },
-        { key: "playerD9" },
-        { key: "playerD10" },
-      ],
-      frameRate: 8,
-      repeat: -1,
-    });
-    this.anims.create({
-      key: "stop",
-      frames: [{ key: "playerR1" }],
-    });
-    this.player = this.add.sprite(400, 300, "playerR1");
+    this.player = new Player(this);
     this.cameras.main.startFollow(this.player);
 
     this.time.addEvent({
