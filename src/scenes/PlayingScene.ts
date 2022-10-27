@@ -73,7 +73,7 @@ export default class PlayingScene extends Phaser.Scene {
     this.load.image("beam", "./src/assets/bullets/bullet01.png");
 
     // Enemy
-    this.load.image("enemy1", "./src/assets/sprites/enemy/blade_knight.png");
+    this.load.image("enemy1", "./src/assets/sprites/enemy/bat1.png");
 
     this.load.image("background", "./src/assets/background/clouds.png");
   }
@@ -109,6 +109,14 @@ export default class PlayingScene extends Phaser.Scene {
       this
     );
 
+    this.physics.add.overlap(
+      this.player,
+      this.enemies as unknown as Phaser.GameObjects.GameObject[],
+      () => this.player.hitBy(),
+      null,
+      this
+    );
+
     this.cursorKeys = this.input.keyboard.createCursorKeys();
     this.wasdKeys = this.input.keyboard.addKeys({
       up: Phaser.Input.Keyboard.KeyCodes.W,
@@ -129,10 +137,13 @@ export default class PlayingScene extends Phaser.Scene {
 
   addEnemyLoop() {
     this.time.addEvent({
-      delay: 2000,
+      delay: 1000,
       callback: () => {
-        // TODO: 랜덤하게 나타나도록 함
-        this.enemies.add(new Enemy(this, 0, 0, "enemy1"));
+        const r = Math.sqrt(800 * 800 + 600 * 600) / 2;
+        const rand = Math.random() * Math.PI * 2;
+        const x = this.player.x + r * Math.cos(rand);
+        const y = this.player.y + r * Math.sin(rand);
+        this.enemies.add(new Enemy(this, x, y, "enemy1"));
       },
       loop: true,
     });
