@@ -21,6 +21,10 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
     scene.events.on("update", () => {
       this.update();
     });
+
+    this.on("overlapstart", (sprite: any) => {
+      this.hitBy(sprite);
+    });
   }
 
   update() {
@@ -28,5 +32,11 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
 
     if (this.body.velocity.x > 0) this.flipX = true;
     else this.flipX = false;
+  }
+
+  hitBy(sprite: any) {
+    sprite.destroy();
+    this.scene.time.removeAllEvents();
+    this.destroy();
   }
 }

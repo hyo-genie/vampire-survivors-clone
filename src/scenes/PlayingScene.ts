@@ -10,7 +10,7 @@ declare type WasdKeys = {
 };
 export default class PlayingScene extends Phaser.Scene {
   player: Phaser.GameObjects.Sprite | null = null;
-  enemy: Phaser.GameObjects.Sprite | null = null;
+  beams: Phaser.GameObjects.Group | null = null;
   enemies: Phaser.Physics.Arcade.Group | null = null;
 
   private background: Phaser.GameObjects.TileSprite;
@@ -175,6 +175,18 @@ export default class PlayingScene extends Phaser.Scene {
     // Enemy
     this.enemies = this.physics.add.group();
     this.enemies.add(new Enemy(this, 100, 200, "enemy1"));
+
+    // Effects
+    this.beams = this.add.group();
+
+    // Collision
+    this.physics.add.overlap(
+      this.beams as unknown as Phaser.GameObjects.GameObject[],
+      this.enemies as unknown as Phaser.GameObjects.GameObject[],
+      (beam: Beam, enemy: Enemy) => enemy.hitBy(beam),
+      null,
+      this
+    );
 
     this.cursorKeys = this.input.keyboard.createCursorKeys();
     this.wasdKeys = this.input.keyboard.addKeys({
