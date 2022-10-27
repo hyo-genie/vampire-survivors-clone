@@ -1,6 +1,7 @@
 import config from "../config";
 import Beam from "../effects/Beam";
 import Enemy from "../sprites/Enemy";
+import Player from "../sprites/Player";
 
 declare type WasdKeys = {
   up?: Phaser.Input.Keyboard.Key;
@@ -9,13 +10,13 @@ declare type WasdKeys = {
   right?: Phaser.Input.Keyboard.Key;
 };
 export default class PlayingScene extends Phaser.Scene {
-  player: Phaser.GameObjects.Sprite | null = null;
-  beams: Phaser.GameObjects.Group | null = null;
-  enemies: Phaser.Physics.Arcade.Group | null = null;
+  player: Phaser.GameObjects.Sprite;
+  beams: Phaser.GameObjects.Group;
+  enemies: Phaser.Physics.Arcade.Group;
 
   private background: Phaser.GameObjects.TileSprite;
-  private cursorKeys: CursorKeys;
-  private wasdKeys: WasdKeys;
+  cursorKeys: CursorKeys;
+  wasdKeys: WasdKeys;
 
   constructor() {
     super("PlayGame");
@@ -161,16 +162,8 @@ export default class PlayingScene extends Phaser.Scene {
       key: "stop",
       frames: [{ key: "playerR1" }],
     });
-    this.player = this.add.sprite(400, 300, "playerR1");
+    this.player = new Player(this);
     this.cameras.main.startFollow(this.player);
-
-    this.time.addEvent({
-      delay: 1000,
-      callback: () => {
-        this.shoot();
-      },
-      loop: true,
-    });
 
     // Enemy
     this.enemies = this.physics.add.group();
@@ -196,37 +189,9 @@ export default class PlayingScene extends Phaser.Scene {
       right: Phaser.Input.Keyboard.KeyCodes.D,
     });
   }
-  shoot() {
-    new Beam(this, this.player);
-  }
-
-  movePlayerManager() {
-    if (this.cursorKeys.left.isDown || this.wasdKeys.left.isDown) {
-      this.player.play("left", true);
-      this.player.x -= 3;
-    } else if (this.cursorKeys.right.isDown || this.wasdKeys.right.isDown) {
-      this.player.x += 3;
-      this.player.play("right", true);
-    } else if (this.cursorKeys.up.isDown || this.wasdKeys.up.isDown) {
-      this.player.y -= 3;
-      this.player.play("up", true);
-    } else if (this.cursorKeys.down.isDown || this.wasdKeys.down.isDown) {
-      this.player.y += 3;
-      this.player.play("down", true);
-    }
-
-    if (
-      Phaser.Input.Keyboard.JustUp(this.cursorKeys.right) ||
-      Phaser.Input.Keyboard.JustUp(this.wasdKeys.right) ||
-      Phaser.Input.Keyboard.JustUp(this.cursorKeys.left) ||
-      Phaser.Input.Keyboard.JustUp(this.wasdKeys.left)
-    ) {
-      this.player.play("stop", true);
-    }
-  }
 
   update() {
-    this.movePlayerManager();
+    this.player.move();
 
     this.background.setX(this.player.x - 400);
     this.background.setY(this.player.y - 300);
