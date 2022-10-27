@@ -1,6 +1,6 @@
-import Player from "../characters/Player";
 import config from "../config";
 import Beam from "../effects/Beam";
+import Enemy from "../sprites/Enemy";
 
 declare type WasdKeys = {
   up?: Phaser.Input.Keyboard.Key;
@@ -9,7 +9,9 @@ declare type WasdKeys = {
   right?: Phaser.Input.Keyboard.Key;
 };
 export default class PlayingScene extends Phaser.Scene {
-  private player: Phaser.GameObjects.Sprite | null = null;
+  player: Phaser.GameObjects.Sprite | null = null;
+  enemy: Phaser.GameObjects.Sprite | null = null;
+  enemies: Phaser.Physics.Arcade.Group | null = null;
 
   private background: Phaser.GameObjects.TileSprite;
   private cursorKeys: CursorKeys;
@@ -69,9 +71,13 @@ export default class PlayingScene extends Phaser.Scene {
 
     this.load.image("beam", "./src/assets/bullets/bullet01.png");
 
+    // Enemy
+    this.load.image("enemy1", "./src/assets/sprites/enemy/blade_knight.png");
+
     this.load.image("background", "./src/assets/background/clouds.png");
   }
   create() {
+    // Background
     this.background = this.add.tileSprite(
       0,
       0,
@@ -82,6 +88,7 @@ export default class PlayingScene extends Phaser.Scene {
     this.background.setOrigin(0, 0);
     this.background.alpha = 0.5;
 
+    // Player
     this.anims.create({
       key: "right",
       frames: [
@@ -164,6 +171,10 @@ export default class PlayingScene extends Phaser.Scene {
       },
       loop: true,
     });
+
+    // Enemy
+    this.enemies = this.physics.add.group();
+    this.enemies.add(new Enemy(this, 100, 200, "enemy1"));
 
     this.cursorKeys = this.input.keyboard.createCursorKeys();
     this.wasdKeys = this.input.keyboard.addKeys({
