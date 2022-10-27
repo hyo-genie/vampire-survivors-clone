@@ -174,7 +174,7 @@ export default class PlayingScene extends Phaser.Scene {
 
     // Enemy
     this.enemies = this.physics.add.group();
-    this.enemies.add(new Enemy(this, 100, 200, "enemy1"));
+    this.addEnemyLoop();
 
     // Effects
     this.beams = this.add.group();
@@ -232,5 +232,16 @@ export default class PlayingScene extends Phaser.Scene {
     this.background.setY(this.player.y - 300);
     this.background.tilePositionX = this.player.x - 400;
     this.background.tilePositionY = this.player.y - 300;
+  }
+
+  addEnemyLoop() {
+    this.time.addEvent({
+      delay: 2000,
+      callback: () => {
+        // TODO: 랜덤하게 나타나도록 함
+        this.enemies.add(new Enemy(this, 0, 0, "enemy1"));
+      },
+      loop: true,
+    });
   }
 }

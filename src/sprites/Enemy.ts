@@ -1,6 +1,8 @@
 import PlayingScene from "../scenes/PlayingScene";
 
 export default class Enemy extends Phaser.GameObjects.Sprite {
+  event: Phaser.Time.TimerEvent;
+
   constructor(scene: PlayingScene, x: number, y: number, texture: string) {
     super(scene, x, y, texture);
 
@@ -10,7 +12,7 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
     this.scaleX = 0.4;
     this.scaleY = 0.4;
 
-    this.scene.time.addEvent({
+    this.event = this.scene.time.addEvent({
       delay: 100,
       callback: () => {
         scene.physics.moveToObject(this, scene.player, 50);
@@ -20,10 +22,6 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
 
     scene.events.on("update", () => {
       this.update();
-    });
-
-    this.on("overlapstart", (sprite: any) => {
-      this.hitBy(sprite);
     });
   }
 
@@ -36,7 +34,7 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
 
   hitBy(sprite: any) {
     sprite.destroy();
-    this.scene.time.removeAllEvents();
+    this.scene.time.removeEvent(this.event);
     this.destroy();
   }
 }
