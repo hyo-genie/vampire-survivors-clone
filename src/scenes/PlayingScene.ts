@@ -43,6 +43,28 @@ export default class PlayingScene extends Phaser.Scene {
     this.load.image("playerL9", "./src/assets/sprites/kirbyL9.png");
     this.load.image("playerL10", "./src/assets/sprites/kirbyL10.png");
 
+    this.load.image("playerU1", "./src/assets/sprites/kirbyU1.png");
+    this.load.image("playerU2", "./src/assets/sprites/kirbyU2.png");
+    this.load.image("playerU3", "./src/assets/sprites/kirbyU3.png");
+    this.load.image("playerU4", "./src/assets/sprites/kirbyU4.png");
+    this.load.image("playerU5", "./src/assets/sprites/kirbyU5.png");
+    this.load.image("playerU6", "./src/assets/sprites/kirbyU6.png");
+    this.load.image("playerU7", "./src/assets/sprites/kirbyU7.png");
+    this.load.image("playerU8", "./src/assets/sprites/kirbyU8.png");
+    this.load.image("playerU9", "./src/assets/sprites/kirbyU9.png");
+    this.load.image("playerU10", "./src/assets/sprites/kirbyU10.png");
+
+    this.load.image("playerD1", "./src/assets/sprites/kirbyD1.png");
+    this.load.image("playerD2", "./src/assets/sprites/kirbyD2.png");
+    this.load.image("playerD3", "./src/assets/sprites/kirbyD3.png");
+    this.load.image("playerD4", "./src/assets/sprites/kirbyD4.png");
+    this.load.image("playerD5", "./src/assets/sprites/kirbyD5.png");
+    this.load.image("playerD6", "./src/assets/sprites/kirbyD6.png");
+    this.load.image("playerD7", "./src/assets/sprites/kirbyD7.png");
+    this.load.image("playerD8", "./src/assets/sprites/kirbyD8.png");
+    this.load.image("playerD9", "./src/assets/sprites/kirbyD9.png");
+    this.load.image("playerD10", "./src/assets/sprites/kirbyD10.png");
+
     this.load.image("beam", "./src/assets/bullets/bullet01.png");
 
     this.load.image("background", "./src/assets/background/clouds.png");
@@ -93,6 +115,40 @@ export default class PlayingScene extends Phaser.Scene {
       repeat: -1,
     });
     this.anims.create({
+      key: "up",
+      frames: [
+        { key: "playerU1" },
+        { key: "playerU2" },
+        { key: "playerU3" },
+        { key: "playerU4" },
+        { key: "playerU5" },
+        { key: "playerU6" },
+        { key: "playerU7" },
+        { key: "playerU8" },
+        { key: "playerU9" },
+        { key: "playerU10" },
+      ],
+      frameRate: 8,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: "down",
+      frames: [
+        { key: "playerD1" },
+        { key: "playerD2" },
+        { key: "playerD3" },
+        { key: "playerD4" },
+        { key: "playerD5" },
+        { key: "playerD6" },
+        { key: "playerD7" },
+        { key: "playerD8" },
+        { key: "playerD9" },
+        { key: "playerD10" },
+      ],
+      frameRate: 8,
+      repeat: -1,
+    });
+    this.anims.create({
       key: "stop",
       frames: [{ key: "playerR1" }],
     });
@@ -126,12 +182,12 @@ export default class PlayingScene extends Phaser.Scene {
     } else if (this.cursorKeys.right.isDown || this.wasdKeys.right.isDown) {
       this.player.x += 3;
       this.player.play("right", true);
-    }
-
-    if (this.cursorKeys.up.isDown || this.wasdKeys.up.isDown) {
+    } else if (this.cursorKeys.up.isDown || this.wasdKeys.up.isDown) {
       this.player.y -= 3;
+      this.player.play("up", true);
     } else if (this.cursorKeys.down.isDown || this.wasdKeys.down.isDown) {
       this.player.y += 3;
+      this.player.play("down", true);
     }
 
     if (
