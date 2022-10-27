@@ -1,10 +1,11 @@
 import Phaser from "phaser";
+import PlayingScene from "../scenes/PlayingScene";
 
 export default class Beam extends Phaser.Physics.Arcade.Sprite {
   static SPEED = 100;
-  static DURATION = 1000;
+  static DURATION = 2000;
 
-  constructor(scene: Phaser.Scene, player: Phaser.GameObjects.Sprite) {
+  constructor(scene: PlayingScene, player: Phaser.GameObjects.Sprite) {
     const x = player.x;
     const y = player.y - 16;
     super(scene, x, y, "beam");
@@ -12,7 +13,7 @@ export default class Beam extends Phaser.Physics.Arcade.Sprite {
     scene.add.existing(this);
     scene.physics.world.enableBody(this);
 
-    // scene.m_projectiles.add(this);
+    scene.beams.add(this);
 
     this.setCircle(30);
     this.setDepth(80);

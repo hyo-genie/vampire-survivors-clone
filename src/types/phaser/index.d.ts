@@ -52933,6 +52933,9 @@ declare namespace Phaser {
              */
             removeAllEvents(): Phaser.Time.Clock;
 
+            removeEvent(event: Phaser.Time.TimerEvent): void;
+
+
             /**
              * [description]
              * @param time [description]
