@@ -1,13 +1,18 @@
 import Beam from "../effects/Beam";
+import HpBar from "../effects/HpBar";
 import PlayingScene from "../scenes/PlayingScene";
 
 export default class Player extends Phaser.GameObjects.Sprite {
   scene: PlayingScene;
-  hpBar: Phaser.GameObjects.Graphics;
+  hpBar: HpBar;
 
   constructor(scene: PlayingScene) {
     super(scene, 400, 300, "playerR1");
+    this.scaleX = 1.2;
+    this.scaleY = 1.2;
+
     this.scene = scene;
+    this.hpBar = new HpBar(scene, this);
 
     scene.add.existing(this);
     scene.physics.add.existing(this);
@@ -59,6 +64,10 @@ export default class Player extends Phaser.GameObjects.Sprite {
     ) {
       this.play("stop", true);
     }
+  }
+
+  hitBy() {
+    this.hpBar.decrease(1);
   }
 
   createAnims() {

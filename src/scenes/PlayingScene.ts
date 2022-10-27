@@ -73,7 +73,7 @@ export default class PlayingScene extends Phaser.Scene {
     this.load.image("beam", "./src/assets/bullets/bullet01.png");
 
     // Enemy
-    this.load.image("enemy1", "./src/assets/sprites/enemy/blade_knight.png");
+    this.load.image("enemy1", "./src/assets/sprites/enemy/bat1.png");
 
     this.load.image("background", "./src/assets/background/clouds.png");
   }
@@ -93,14 +93,6 @@ export default class PlayingScene extends Phaser.Scene {
     this.player = new Player(this);
     this.cameras.main.startFollow(this.player);
 
-    this.time.addEvent({
-      delay: 1000,
-      callback: () => {
-        this.shoot();
-      },
-      loop: true,
-    });
-
     // Enemy
     this.enemies = this.physics.add.group();
     this.addEnemyLoop();
@@ -117,6 +109,14 @@ export default class PlayingScene extends Phaser.Scene {
       this
     );
 
+    this.physics.add.overlap(
+      this.player,
+      this.enemies as unknown as Phaser.GameObjects.GameObject[],
+      () => this.player.hitBy(),
+      null,
+      this
+    );
+
     this.cursorKeys = this.input.keyboard.createCursorKeys();
     this.wasdKeys = this.input.keyboard.addKeys({
       up: Phaser.Input.Keyboard.KeyCodes.W,
@@ -125,37 +125,9 @@ export default class PlayingScene extends Phaser.Scene {
       right: Phaser.Input.Keyboard.KeyCodes.D,
     });
   }
-  shoot() {
-    new Beam(this, this.player);
-  }
-
-  movePlayerManager() {
-    if (this.cursorKeys.left.isDown || this.wasdKeys.left.isDown) {
-      this.player.play("left", true);
-      this.player.x -= 3;
-    } else if (this.cursorKeys.right.isDown || this.wasdKeys.right.isDown) {
-      this.player.x += 3;
-      this.player.play("right", true);
-    } else if (this.cursorKeys.up.isDown || this.wasdKeys.up.isDown) {
-      this.player.y -= 3;
-      this.player.play("up", true);
-    } else if (this.cursorKeys.down.isDown || this.wasdKeys.down.isDown) {
-      this.player.y += 3;
-      this.player.play("down", true);
-    }
-
-    if (
-      Phaser.Input.Keyboard.JustUp(this.cursorKeys.right) ||
-      Phaser.Input.Keyboard.JustUp(this.wasdKeys.right) ||
-      Phaser.Input.Keyboard.JustUp(this.cursorKeys.left) ||
-      Phaser.Input.Keyboard.JustUp(this.wasdKeys.left)
-    ) {
-      this.player.play("stop", true);
-    }
-  }
 
   update() {
-    this.movePlayerManager();
+    this.player.move();
 
     this.background.setX(this.player.x - 400);
     this.background.setY(this.player.y - 300);
@@ -165,10 +137,13 @@ export default class PlayingScene extends Phaser.Scene {
 
   addEnemyLoop() {
     this.time.addEvent({
-      delay: 2000,
+      delay: 1000,
       callback: () => {
-        // TODO: 랜덤하게 나타나도록 함
-        this.enemies.add(new Enemy(this, 0, 0, "enemy1"));
+        const r = Math.sqrt(800 * 800 + 600 * 600) / 2;
+        const rand = Math.random() * Math.PI * 2;
+        const x = this.player.x + r * Math.cos(rand);
+        const y = this.player.y + r * Math.sin(rand);
+        this.enemies.add(new Enemy(this, x, y, "enemy1"));
       },
       loop: true,
     });

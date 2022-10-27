@@ -13425,7 +13425,7 @@ declare namespace Phaser {
              * @param scene [description]
              * @param options [description]
              */
-            constructor(scene: Phaser.Scene, options: object);
+            constructor(scene: Phaser.Scene, options?: object);
 
             /**
              * [description]

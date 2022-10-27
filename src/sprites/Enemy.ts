@@ -9,13 +9,13 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
     scene.add.existing(this);
     scene.physics.add.existing(this);
 
-    this.scaleX = 0.4;
-    this.scaleY = 0.4;
+    this.scaleX = 0.5;
+    this.scaleY = 0.5;
 
     this.event = this.scene.time.addEvent({
       delay: 100,
       callback: () => {
-        scene.physics.moveToObject(this, scene.player, 50);
+        scene.physics.moveToObject(this, scene.player, 100);
       },
       loop: true,
     });
