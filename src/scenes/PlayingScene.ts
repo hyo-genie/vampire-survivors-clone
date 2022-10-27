@@ -21,49 +21,51 @@ export default class PlayingScene extends Phaser.Scene {
 
   preload() {
     this.load.setBaseURL("http://127.0.0.1:8887");
-    this.load.image("playerR1", "./src/assets/sprites/kirbyR1.png");
-    this.load.image("playerR2", "./src/assets/sprites/kirbyR2.png");
-    this.load.image("playerR3", "./src/assets/sprites/kirbyR3.png");
-    this.load.image("playerR4", "./src/assets/sprites/kirbyR4.png");
-    this.load.image("playerR5", "./src/assets/sprites/kirbyR5.png");
-    this.load.image("playerR6", "./src/assets/sprites/kirbyR6.png");
-    this.load.image("playerR7", "./src/assets/sprites/kirbyR7.png");
-    this.load.image("playerR8", "./src/assets/sprites/kirbyR8.png");
-    this.load.image("playerR9", "./src/assets/sprites/kirbyR9.png");
-    this.load.image("playerR10", "./src/assets/sprites/kirbyR10.png");
 
-    this.load.image("playerL1", "./src/assets/sprites/kirbyL1.png");
-    this.load.image("playerL2", "./src/assets/sprites/kirbyL2.png");
-    this.load.image("playerL3", "./src/assets/sprites/kirbyL3.png");
-    this.load.image("playerL4", "./src/assets/sprites/kirbyL4.png");
-    this.load.image("playerL5", "./src/assets/sprites/kirbyL5.png");
-    this.load.image("playerL6", "./src/assets/sprites/kirbyL6.png");
-    this.load.image("playerL7", "./src/assets/sprites/kirbyL7.png");
-    this.load.image("playerL8", "./src/assets/sprites/kirbyL8.png");
-    this.load.image("playerL9", "./src/assets/sprites/kirbyL9.png");
-    this.load.image("playerL10", "./src/assets/sprites/kirbyL10.png");
+    // Player
+    this.load.image("playerR1", "./src/assets/sprites/player/kirbyR1.png");
+    this.load.image("playerR2", "./src/assets/sprites/player/kirbyR2.png");
+    this.load.image("playerR3", "./src/assets/sprites/player/kirbyR3.png");
+    this.load.image("playerR4", "./src/assets/sprites/player/kirbyR4.png");
+    this.load.image("playerR5", "./src/assets/sprites/player/kirbyR5.png");
+    this.load.image("playerR6", "./src/assets/sprites/player/kirbyR6.png");
+    this.load.image("playerR7", "./src/assets/sprites/player/kirbyR7.png");
+    this.load.image("playerR8", "./src/assets/sprites/player/kirbyR8.png");
+    this.load.image("playerR9", "./src/assets/sprites/player/kirbyR9.png");
+    this.load.image("playerR10", "./src/assets/sprites/player/kirbyR10.png");
 
-    this.load.image("playerU1", "./src/assets/sprites/kirbyU1.png");
-    this.load.image("playerU2", "./src/assets/sprites/kirbyU2.png");
-    this.load.image("playerU3", "./src/assets/sprites/kirbyU3.png");
-    this.load.image("playerU4", "./src/assets/sprites/kirbyU4.png");
-    this.load.image("playerU5", "./src/assets/sprites/kirbyU5.png");
-    this.load.image("playerU6", "./src/assets/sprites/kirbyU6.png");
-    this.load.image("playerU7", "./src/assets/sprites/kirbyU7.png");
-    this.load.image("playerU8", "./src/assets/sprites/kirbyU8.png");
-    this.load.image("playerU9", "./src/assets/sprites/kirbyU9.png");
-    this.load.image("playerU10", "./src/assets/sprites/kirbyU10.png");
+    this.load.image("playerL1", "./src/assets/sprites/player/kirbyL1.png");
+    this.load.image("playerL2", "./src/assets/sprites/player/kirbyL2.png");
+    this.load.image("playerL3", "./src/assets/sprites/player/kirbyL3.png");
+    this.load.image("playerL4", "./src/assets/sprites/player/kirbyL4.png");
+    this.load.image("playerL5", "./src/assets/sprites/player/kirbyL5.png");
+    this.load.image("playerL6", "./src/assets/sprites/player/kirbyL6.png");
+    this.load.image("playerL7", "./src/assets/sprites/player/kirbyL7.png");
+    this.load.image("playerL8", "./src/assets/sprites/player/kirbyL8.png");
+    this.load.image("playerL9", "./src/assets/sprites/player/kirbyL9.png");
+    this.load.image("playerL10", "./src/assets/sprites/player/kirbyL10.png");
 
-    this.load.image("playerD1", "./src/assets/sprites/kirbyD1.png");
-    this.load.image("playerD2", "./src/assets/sprites/kirbyD2.png");
-    this.load.image("playerD3", "./src/assets/sprites/kirbyD3.png");
-    this.load.image("playerD4", "./src/assets/sprites/kirbyD4.png");
-    this.load.image("playerD5", "./src/assets/sprites/kirbyD5.png");
-    this.load.image("playerD6", "./src/assets/sprites/kirbyD6.png");
-    this.load.image("playerD7", "./src/assets/sprites/kirbyD7.png");
-    this.load.image("playerD8", "./src/assets/sprites/kirbyD8.png");
-    this.load.image("playerD9", "./src/assets/sprites/kirbyD9.png");
-    this.load.image("playerD10", "./src/assets/sprites/kirbyD10.png");
+    this.load.image("playerU1", "./src/assets/sprites/player/kirbyU1.png");
+    this.load.image("playerU2", "./src/assets/sprites/player/kirbyU2.png");
+    this.load.image("playerU3", "./src/assets/sprites/player/kirbyU3.png");
+    this.load.image("playerU4", "./src/assets/sprites/player/kirbyU4.png");
+    this.load.image("playerU5", "./src/assets/sprites/player/kirbyU5.png");
+    this.load.image("playerU6", "./src/assets/sprites/player/kirbyU6.png");
+    this.load.image("playerU7", "./src/assets/sprites/player/kirbyU7.png");
+    this.load.image("playerU8", "./src/assets/sprites/player/kirbyU8.png");
+    this.load.image("playerU9", "./src/assets/sprites/player/kirbyU9.png");
+    this.load.image("playerU10", "./src/assets/sprites/player/kirbyU10.png");
+
+    this.load.image("playerD1", "./src/assets/sprites/player/kirbyD1.png");
+    this.load.image("playerD2", "./src/assets/sprites/player/kirbyD2.png");
+    this.load.image("playerD3", "./src/assets/sprites/player/kirbyD3.png");
+    this.load.image("playerD4", "./src/assets/sprites/player/kirbyD4.png");
+    this.load.image("playerD5", "./src/assets/sprites/player/kirbyD5.png");
+    this.load.image("playerD6", "./src/assets/sprites/player/kirbyD6.png");
+    this.load.image("playerD7", "./src/assets/sprites/player/kirbyD7.png");
+    this.load.image("playerD8", "./src/assets/sprites/player/kirbyD8.png");
+    this.load.image("playerD9", "./src/assets/sprites/player/kirbyD9.png");
+    this.load.image("playerD10", "./src/assets/sprites/player/kirbyD10.png");
 
     this.load.image("beam", "./src/assets/bullets/bullet01.png");
 
